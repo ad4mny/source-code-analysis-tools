@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends CI_Controller
+class AnalyticController extends CI_Controller
 {
     public function __construct()
     {
@@ -11,7 +11,7 @@ class IndexController extends CI_Controller
     {
         $this->load->view('templates/Header');
         $this->load->view('templates/Navigation');
-        $this->load->view('IndexInterface');
+        $this->load->view('AnalyticInterface');
         $this->load->view('templates/Footer');
     }
 }

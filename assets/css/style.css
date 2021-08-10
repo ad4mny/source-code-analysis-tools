@@ -1,20 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-h1 {
-    font-family: 'Roboto', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
 
 body,
 html {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
     position: relative;
     min-height: 100vh;
     scroll-behavior: smooth;
 }
 
+.custom-shape-divider-bottom-1623072887 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1623072887 svg {
+    position: relative;
+    display: block;
+    width: calc(136% + 1.3px);
+    height: 500px;
+}
+
+.custom-shape-divider-bottom-1623072887 .shape-fill {
+    fill: #00CBA9;
+}
+
 .masthead {
     min-height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://source.unsplash.com/LeG68PrXA6Y/1920x1080');
+    background-image: linear-gradient(rgba(100, 100, 100, 0.9), rgba(100, 100, 100, 0.9)), url('https://source.unsplash.com/cvBBO4PzWPg/1920x1080');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

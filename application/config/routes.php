@@ -10,6 +10,7 @@ $route['logout'] = 'LoginController/logout';
 $route['register'] = 'LoginController/register';
 
 $route['analytic'] = 'AnalyticController';
+$route['analytic/upload'] = 'AnalyticController/uploadFile';
 $route['solution'] = 'SolutionController';
 $route['about'] = 'AboutController';
 $route['profile'] = 'ProfileController';

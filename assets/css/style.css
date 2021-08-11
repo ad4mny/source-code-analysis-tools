@@ -8,6 +8,7 @@ html {
     position: relative;
     min-height: 100vh;
     scroll-behavior: smooth;
+    color: white;
 }
 
 .custom-shape-divider-bottom-1623072887 {
@@ -32,9 +33,7 @@ html {
 }
 
 .masthead {
+    background: linear-gradient(rgba(100, 100, 100, 0.9), rgba(100, 100, 100, 0.9)), url('https://source.unsplash.com/cvBBO4PzWPg/1920x1080')no-repeat center fixed;
     min-height: 100vh;
-    background-image: linear-gradient(rgba(100, 100, 100, 0.9), rgba(100, 100, 100, 0.9)), url('https://source.unsplash.com/cvBBO4PzWPg/1920x1080');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    color: white;
 }

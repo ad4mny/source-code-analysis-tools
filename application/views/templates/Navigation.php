@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="position-absolute end-0 mt-4">
-        <?php if (!isset($_SESSION['id'])) { ?>
+        <?php if (!isset($_SESSION['uid'])) { ?>
             <a href="<?php echo base_url(); ?>login" class="nav-link text-white">
                 <i class="fas fa-sign-in-alt"></i>
             </a>

@@ -1,6 +1,6 @@
 <div class="masthead">
     <div class="vh-100 d-flex align-items-center justify-content-center">
-        <div class="text-white text-center" style="z-index: 1100 !important;">
+        <div class="text-white text-center" style="z-index: 1010 !important;">
             <h3 class="mb-2">Upload a source code file to begin analysis.</h3>
             <form method="post" action="<?php echo base_url(); ?>analytic/upload" enctype="multipart/form-data" class="row g-1">
                 <div class="col-10">

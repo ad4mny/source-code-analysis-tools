@@ -5,9 +5,11 @@ $route['default_controller'] = 'IndexController';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['login'] = 'LoginController';
+$route['login'] = 'LoginController/index/login';
+$route['login/submit'] = 'LoginController/loginUser';
 $route['logout'] = 'LoginController/logout';
-$route['register'] = 'LoginController/register';
+$route['register'] = 'LoginController/index/register';
+$route['register/submit'] = 'LoginController/registerUser';
 
 $route['analytic'] = 'AnalyticController';
 $route['analytic/upload'] = 'AnalyticController/uploadFile';

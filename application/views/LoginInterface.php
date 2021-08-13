@@ -1,6 +1,6 @@
 <div class="masthead">
     <div class="vh-100 d-flex align-items-center justify-content-center ">
-        <div class="row d-flex align-items-center justify-content-center" style="z-index: 1010 !important;">
+    <div class="row d-flex align-items-center justify-content-center" style="z-index: 1 !important;">
             <div class="col bg-white shadow p-5 rounded-3">
                 <form method="post" action="<?php echo base_url(); ?>login/submit">
                     <div class="form-group pb-3 text-center">

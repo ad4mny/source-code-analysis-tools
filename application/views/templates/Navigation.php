@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<div id="alert" class="w-75 position-absolute start-50 translate-middle mt-5" style="z-index: 1; top: 10%;">
+<div id="alert" class="w-75 position-absolute start-50 translate-middle mt-5" style="z-index: 2; top: 10%;">
     <?php
     if ($this->session->tempdata('notice') != NULL) {
         echo '<div class="alert alert-success border-0 shadow alert-dismissible fade show" role="alert">';

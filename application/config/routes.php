@@ -7,7 +7,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'LoginController/index/login';
 $route['login/submit'] = 'LoginController/loginUser';
-$route['logout'] = 'LoginController/logout';
+$route['logout'] = 'LoginController/logoutUser';
 $route['register'] = 'LoginController/index/register';
 $route['register/submit'] = 'LoginController/registerUser';
 

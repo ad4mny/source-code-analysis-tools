@@ -48,6 +48,23 @@ class AnalyticController extends CI_Controller
             }
         }
     }
+
+    public function getResult($file_id)
+    {
+        $return = $this->AnalyticModel->getFileModel($file_id);
+        if ($return !== false) {
+            $data['scan'] = $this->doSQLTest($return['fd_name']);
+            $this->session->set_tempdata('notice', 'Your source code has been scanned and the result stated as below.', 1);
+            $this->load->view('templates/Header');
+            $this->load->view('templates/Navigation');
+            $this->load->view('AnalyticResultInterface', $data);
+            $this->load->view('templates/Footer');
+        } else {
+            $this->session->set_tempdata('error', 'Failed to get your source code, internal server error.', 1);
+            redirect(base_url() . 'analytic');
+        }
+    }
+
     public function doSQLTest($filename)
     {
         // define keyword
@@ -61,40 +78,70 @@ class AnalyticController extends CI_Controller
         $codes = file($filepath);
         $i = 0;
         $count_errors = 0;
+        $data = [];
+        $flag = false;
 
-        // scan for code vulnerablities
-        foreach ($codes as $lines => $content) {
-            foreach ($keyword_query as $queries) {
-                $flag = false;
-
-                if (preg_match("/\b" . $queries . "\b/iu", $content) == 1) {
-
-                    ++$i;
-                    $data[$i]['line'] = $lines;
-                    $data[$i]['content'] = trim($content);
-
-                    foreach ($keyword_connection as $connections) {
-                        if (preg_match("/\b" . $connections . "\b/iu", $content) == 1) {
-                            $data[$i]['desc'] = 'Execute the statement.';
-                            $data[$i]['code'] = '$' . $queries . '->execute();';
+        foreach ($saviors as $key => $value) {
+            foreach ($codes as $lines => $content) {
+                if (preg_match("/\b" . $value . "\b/iu", $content) == 1) {
+                    foreach ($keyword_query as $queries) {
+                        if (preg_match("/\b" . $queries . "\b/iu", $content) == 1) {
                             $flag = true;
                         }
                     }
-
-                    if ($flag === false) {
-                        $code_flaws = explode('"', $content);
-
-                        if (!isset($code_flaws[1])) {
-                            $code_flaws[1] = '';
-                        }
-
-                        $data[$i]['desc'] = 'Prepare the statement.';
-                        $data[$i]['code'] = '$' . $queries . ' = $con->prepare("' . $code_flaws[1] . '");';
-                    }
-
-                    $count_errors++;
                 }
             }
+        }
+
+        if ($flag = false) {
+            // scan for code vulnerablities
+            foreach ($codes as $lines => $content) {
+
+                foreach ($keyword_query as $queries) {
+
+                    if (preg_match("/\b" . $queries . "\b/iu", $content) == 1) {
+                        $flag = false;
+
+                        foreach ($keyword_connection as $connections) {
+                            if (preg_match("/\b" . $connections . "\b/iu", $content) == 1) {
+                                $flag = true;
+                                break;
+                            }
+                        }
+
+                        if ($flag == true) {
+                            if (preg_match("/\b" . $queries . "->execute\b/iu", $content) !== 1) {
+                                ++$i;
+
+                                $data[$i]['line'] = $lines;
+                                $data[$i]['content'] = trim($content);
+                                $data[$i]['desc'] = 'Execute the statement.';
+                                $data[$i]['code'] = '$' . $queries . '->execute();';
+                                $count_errors++;
+                            }
+                        } else {
+                            if (preg_match("/\b" . "con->prepare" . "\b/iu", $content) !== 1) {
+
+                                $code_flaws = explode('"', $content);
+
+                                if (!isset($code_flaws[1])) {
+                                    $code_flaws[1] = '';
+                                }
+                                ++$i;
+
+                                $data[$i]['line'] = $lines;
+                                $data[$i]['content'] = trim($content);
+                                $data[$i]['desc'] = 'Prepare the statement.';
+                                $data[$i]['code'] = '$' . $queries . ' = $con->prepare("' . $code_flaws[1] . '");';
+                                $count_errors++;
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            $data = false;
+            $count_errors = 0;
         }
 
         $endcompute = microtime(true);

@@ -13,6 +13,7 @@ $route['register/submit'] = 'LoginController/registerUser';
 
 $route['analytic'] = 'AnalyticController';
 $route['analytic/upload'] = 'AnalyticController/uploadFile';
+$route['result/(:num)'] = 'AnalyticController/getResult/$1';
 $route['solution'] = 'SolutionController';
 $route['about'] = 'AboutController';
 $route['profile'] = 'ProfileController';

@@ -13,4 +13,13 @@ class AnalyticModel extends CI_Model
 
         return $this->db->insert('file_data', $data);
     }
+
+    public function getFileModel($file_id)
+    {
+        $this->db->select('*');
+        $this->db->from('file_data');
+        $this->db->where('fd_id', $file_id);
+
+        return $this->db->get()->row_array();
+    }
 }

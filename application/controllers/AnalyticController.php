@@ -79,21 +79,21 @@ class AnalyticController extends CI_Controller
         $i = 0;
         $count_errors = 0;
         $data = [];
-        $flag = false;
+        $flag = true;
 
         foreach ($saviors as $key => $value) {
             foreach ($codes as $lines => $content) {
                 if (preg_match("/\b" . $value . "\b/iu", $content) == 1) {
                     foreach ($keyword_query as $queries) {
                         if (preg_match("/\b" . $queries . "\b/iu", $content) == 1) {
-                            $flag = true;
+                            $flag = false;
                         }
                     }
                 }
             }
         }
 
-        if ($flag = false) {
+        if ($flag === true) {
             // scan for code vulnerablities
             foreach ($codes as $lines => $content) {
 

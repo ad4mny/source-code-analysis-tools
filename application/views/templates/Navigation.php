@@ -5,7 +5,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="<?php echo base_url(); ?>">
-                <h3>Scrutinyx</h3>
+                <h3><i class="fas fa-code fa-fw fa-sm"></i> Scrutinyx</h3>
             </a>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item px-1">

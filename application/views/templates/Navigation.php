@@ -53,7 +53,7 @@
                                     </a>
                                 </li>
                                 <li class="m-auto">
-                                    <a href="<?php echo base_url(); ?>profile" class="dropdown-item" type="button">
+                                    <a href="<?php echo base_url(); ?>account" class="dropdown-item" type="button">
                                         <i class="fas fa-user-cog fa-sm fa-fw me-1"></i> Account Setting
                                     </a>
                                 </li>

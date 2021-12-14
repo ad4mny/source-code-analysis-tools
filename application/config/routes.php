@@ -16,7 +16,7 @@ $route['result/(:num)'] = 'AnalyticController/getResult/$1';
 $route['result/delete/(:num)'] = 'AnalyticController/deleteResult/$1';
 $route['solution'] = 'SolutionController';
 $route['about'] = 'AboutController';
-$route['profile'] = 'ProfileController';
+$route['account'] = 'AccountController';
 $route['history'] = 'HistoryController';
 
 

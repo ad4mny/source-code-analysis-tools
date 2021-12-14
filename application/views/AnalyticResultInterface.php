@@ -1,24 +1,72 @@
 <div class="container pb-5 px-5 my-5">
     <?php if (isset($scan) && is_array($scan) && $scan != false) { ?>
-        <div class="row">
+        <div class="row mx-5">
             <div class="col">
                 <h1 class="display-4 border-bottom">Scan Result</h1>
-                <h5><?php echo $scan['errors']; ?> Warning(s) detected!</h5>
-                <h5>File name: <span class="text-muted"><?php echo $scan['file']; ?></span></h5>
-                <h5>Time taken: <span class="text-muted"><?php echo $scan['time']; ?> seconds </span></h5>
-                <h5 class="border-bottom pb-2">Date scanned: <span class="text-muted"><?php echo $scan['date']; ?> UTC</span></h5>
             </div>
         </div>
-        <?php
-        if ($scan['data'] != false) {
-            foreach ($scan['data'] as $data) {
-        ?>
-                <div class="row pb-2">
+        <div class="row mx-5 pb-4" style="height: 50vh;">
+            <div class="col-4 border-end pe-2">
+                <small class="text-muted">RESULT</small>
+                <?php if ($scan['errors'] == 0) { ?>
+                    <p class="text-success">Your file is good, no possible SQL injection flaws detected.</p>
+                <?php } else { ?>
+                    <p class="text-danger"><?php echo $scan['errors']; ?> Warning(s) detected!</p>
+                <?php } ?>
+                <small class="text-muted">FILE NAME</small>
+                <p><?php echo $scan['file']; ?></p>
+                <small class="text-muted">TIME TAKEN</small>
+                <p><?php echo $scan['time']; ?> second(s)</p>
+                <small class="text-muted">DATE SCANNED</small>
+                <p><?php echo $scan['date']; ?> UTC</p>
+                <a href="<?php echo base_url(); ?>history" class="btn btn-outline-primary">View scan history</a>
+            </div>
+            <div class="col ms-2">
+                <div id="myChart" class="h-100 w-100"></div>
+                <script>
+                    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+                    var myConfig = {
+                        "type": "line",
+                        title: {
+                            "text": "Last 10 Analyzed Result Comparison"
+                        },
+                        backgroundColor: 'none',
+                        plotarea: {
+                            backgroundColor: 'transparent'
+                        },
+                        "scale-y": {
+                            "line-color": "#f6f7f8",
+                            "guide": {
+                                "line-style": "dashed"
+                            },
+                            "label": {
+                                "text": "Warning(s) Detected",
+                            },
+                            "minor-ticks": 0,
+                            "thousands-separator": ","
+                        },
+                        "series": [{
+                            "values": [20, 40, 25, 50, 15, 45, 33, 34]
+                        }]
+                    };
+
+                    zingchart.render({
+                        id: 'myChart',
+                        data: myConfig,
+                        height: "100%",
+                        width: "100%"
+                    });
+                </script>
+            </div>
+        </div>
+        <?php if ($scan['data'] != false) {
+            foreach ($scan['data'] as $data) {  ?>
+                <div class="row mx-5 pb-2">
                     <div class="col">
                         <div class="card rounded-3 border-0 shadow h-100">
                             <div class="card-header bg-warning ">
                                 <h5 class="mb-0">
-                                    <i class="fas fa-exclamation-triangle fa-fw"></i>
+                                    <i class="fas fa-exclamation-triangle fa-fw fa-sm me-1"></i>
                                     Possible SQL Injection
                                 </h5>
                             </div>
@@ -43,14 +91,13 @@
                         </div>
                     </div>
                 </div>
-            <?php }
-        } else {
-            ?>
-            <h4 class="text-success">Your file is good, no possible SQL injection flaws detected.</h4>
-            <a href="<?php echo base_url(); ?>history">View scan history</a>
-            <hr>
-    <?php }
+            <?php } ?>
+            <div class="row mx-5 pb-2">
+                <div class="col">
+                    <h1 class="display-4">End of result.</h1>
+                </div>
+            </div>
+    <?php
+        }
     } ?>
-
-    <h2>End of result.</h2>
 </div>

@@ -18,7 +18,7 @@
                 <small class="text-muted">TIME TAKEN</small>
                 <p><?php echo $scan['time']; ?> second(s)</p>
                 <small class="text-muted">DATE SCANNED</small>
-                <p><?php echo $scan['date']; ?> UTC</p>
+                <p><?php echo $scan['date']; ?></p>
                 <a href="<?php echo base_url(); ?>history" class="btn btn-outline-primary"><i class="fas fa-history fa-fw fa-sm"></i> View scan history</a>
                 <a href="#" class="btn btn-secondary" onclick="window.print();"><i class="fas fa-print fa-fw fa-sm"></i> Print</a>
             </div>
@@ -73,11 +73,11 @@
                             </div>
                             <div class="card-body d-inline-flex">
                                 <div class="pe-3 border-end">
-                                    <small class="text-muted">CODE LINE</small>
-                                    <p class="mb-0">Line <?php echo $data['line']; ?></p>
+                                    <small class="text-muted">LINE</small>
+                                    <p class="mb-0"><?php echo $data['line']; ?></p>
                                 </div>
                                 <div class="ps-3">
-                                    <small class="text-muted">CODE CONTENT</small>
+                                    <small class="text-muted">CODE</small>
                                     <p class="mb-0"><?php echo $data['content']; ?></p>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                                 <p class="mb-0"><?php echo $data['desc']; ?></p>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted">POSSIBLE CODE FIX</small>
+                                <small class="text-muted">EXAMPLE CODE FIX</small>
                                 <p class="mb-0"><?php echo $data['code']; ?></p>
                             </div>
                         </div>

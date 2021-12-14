@@ -69,90 +69,93 @@ class AnalyticController extends CI_Controller
     public function doSQLTest($filename)
     {
         // define keyword
-        $keyword_connection = ['con', 'conn', 'dbcon', 'db', 'dbconn'];
-        $keyword_query = ['sql', 'stmt', 'query'];
-        $saviors = ['prepare', 'execute'];
+        $keywords = ['$sql', '$stmt', '$query', '$result'];
 
         // start the code analysis
-        $startcompute = microtime(true);
+        $timer_start = microtime(true);
         $filepath = './storage/user-upload/' . $filename;
         $codes = file($filepath);
         $i = 0;
-        $count_errors = 0;
+        $errors = 0;
         $data = [];
-        $flag = true;
 
-        foreach ($saviors as $key => $value) {
-            foreach ($codes as $lines => $content) {
-                if (preg_match("/\b" . $value . "\b/iu", $content) == 1) {
-                    foreach ($keyword_query as $queries) {
-                        if (preg_match("/\b" . $queries . "\b/iu", $content) == 1) {
-                            $flag = false;
-                        }
-                    }
-                }
-            }
-        }
+        // extract full code as line and current line content
+        foreach ($codes as $lines => $content) {
 
-        if ($flag === true) {
-            // scan for code vulnerablities
-            foreach ($codes as $lines => $content) {
+            $flag = true;
 
-                foreach ($keyword_query as $queries) {
+            // loop through each rule for query keyword
+            foreach ($keywords as $index => $keyword) {
 
-                    if (preg_match("/\b" . $queries . "\b/iu", $content) == 1) {
+                if (strpos($content, $keyword . ' =') !== false) {
+
+                    // condition for different in single or double qoute usage
+                    if (strpos($content, '"') !== false) {
+                        $extracted_query = explode('"', $content);
+                    } else if (strpos($content, "'") !== false) {
+                        $extracted_query = explode("'", $content);
+                    } else {
+                        // false for none query statement found with qoutes
                         $flag = false;
+                    }
 
-                        foreach ($keyword_connection as $connections) {
-                            if (preg_match("/\b" . $connections . "\b/iu", $content) == 1) {
-                                $flag = true;
-                                break;
-                            }
+                    if ($flag !== false) {
+                        // compare SQL flaw code
+                        if (
+                            strpos($extracted_query[1], "=$") !== false ||
+                            strpos($extracted_query[1], "= $") !== false ||
+                            strpos($extracted_query[1], "='$") !== false ||
+                            strpos($extracted_query[1], "= '$") !== false
+                        ) {
+                            $data[$i]['line'] = $lines + 1;
+                            $data[$i]['content'] = trim($content);
+                            $data[$i]['desc'] = 'Use PDO to prepare SQL query.';
+                            $data[$i]['code'] = $keyword . ' = $con->prepare("SELECT * FROM example WHERE id = ?");<br>' .
+                                $keyword . '->bind_param("s", $exampleid);';
+                            $errors++;
+                            $i++;
                         }
-
-                        if ($flag == true) {
-                            if (preg_match("/\b" . $queries . "->execute\b/iu", $content) !== 1) {
-                                ++$i;
-
-                                $data[$i]['line'] = $lines;
-                                $data[$i]['content'] = trim($content);
-                                $data[$i]['desc'] = 'Execute the statement.';
-                                $data[$i]['code'] = '$' . $queries . '->execute();';
-                                $count_errors++;
-                            }
-                        } else {
-                            if (preg_match("/\b" . "con->prepare" . "\b/iu", $content) !== 1) {
-
-                                $code_flaws = explode('"', $content);
-
-                                if (!isset($code_flaws[1])) {
-                                    $code_flaws[1] = '';
-                                }
-                                ++$i;
-
-                                $data[$i]['line'] = $lines;
-                                $data[$i]['content'] = trim($content);
-                                $data[$i]['desc'] = 'Prepare the statement.';
-                                $data[$i]['code'] = '$' . $queries . ' = $con->prepare("' . $code_flaws[1] . '");';
-                                $count_errors++;
-                            }
+                    } else {
+                        // else get connection flaw code
+                        if (
+                            strpos($content, "mysqli_query") !== false ||
+                            strpos($content, "mysql_query") !== false
+                        ) {
+                            $data[$i]['line'] = $lines + 1;
+                            $data[$i]['content'] = trim($content);
+                            $data[$i]['desc'] = 'Use PDO to execute SQL query.';
+                            $data[$i]['code'] = $keyword . '->execute();';
+                            $errors++;
+                            $i++;
                         }
                     }
                 }
             }
-        } else {
-            $data = false;
-            $count_errors = 0;
+
+            if (strpos($content, $keyword . ' =') === false) {
+                // if connection flaw code does not satified above rules
+                if (
+                    strpos($content, "mysqli_query") !== false ||
+                    strpos($content, "mysql_query") !== false
+                ) {
+                    $data[$i]['line'] = $lines + 1;
+                    $data[$i]['content'] = trim($content);
+                    $data[$i]['desc'] = 'Use PDO to execute SQL query.';
+                    $data[$i]['code'] = $keyword . '->execute();';
+                    $errors++;
+                    $i++;
+                }
+            }
         }
 
-        $endcompute = microtime(true);
+        $timer_end = microtime(true);
 
         $result = array(
             'data' => $data,
-            'time' => number_format((float)($endcompute - $startcompute), 5, '.', ''),
+            'time' => number_format((float)($timer_end - $timer_start), 5, '.', ''),
             'file' => $filename,
-            'errors' => $count_errors,
-            'date' => date('H:i:s d/m/Y')
+            'errors' => $errors,
+            'date' => date(DATE_RFC850)
         );
 
         return $result;

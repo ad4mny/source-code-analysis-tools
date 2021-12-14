@@ -74,16 +74,16 @@
     </div>
 </nav>
 
-<div class="w-50 position-absolute start-50 translate-middle-x mt-5">
+<div class="w-50 float-end position-absolute m-3">
     <?php
     if ($this->session->tempdata('notice') != NULL) {
-        echo '<div class="alert alert-success border-0 shadow-sm alert-dismissible fade show" role="alert">';
+        echo '<div class="alert alert-light border-0 shadow alert-dismissible fade show" role="alert">';
         echo '<i class="fas fa-info-circle fa-fw"></i> ' . $this->session->tempdata('notice');
         echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
         echo '</div>';
     }
     if ($this->session->tempdata('error') != NULL) {
-        echo '<div class="alert alert-danger border-0 shadow-sm alert-dismissible fade show" role="alert">';
+        echo '<div class="alert alert-danger border-0 shadow alert-dismissible fade show" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-fw"></i> ' . $this->session->tempdata('error');
         echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
         echo '</div>';

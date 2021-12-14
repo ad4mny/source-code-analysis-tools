@@ -4,12 +4,9 @@
             <div class="row mt-3">
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <h6 class="text-uppercase fw-bold mb-4">
-                        SUSUN DEVELOPMENT
+                        COMPANY
                     </h6>
-                    <p>
-                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                        dolor sit amet, consectetur adipisicing elit.
-                    </p>
+                    <img src="<?php echo base_url(); ?>assets/img/company.png" class="img-fluid">
                 </div>
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                     <h6 class="text-uppercase fw-bold mb-4">
@@ -33,7 +30,10 @@
                     <h6 class="text-uppercase fw-bold mb-4">
                         Contact
                     </h6>
-                    <p><i class="fas fa-home me-3"></i> Universiti Malaysia Pahang, 26600 Pekan, Malaysia.</p>
+                    <p>
+                        <i class="fas fa-map-marker-alt me-3"></i>
+                        Universiti Malaysia Pahang, 26600 Pekan, Pahang Malaysia.
+                    </p>
                     <p>
                         <i class="fas fa-envelope me-3"></i>
                         fahim@ump.edu.my
@@ -43,7 +43,7 @@
         </div>
     </section>
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        &copy; 2021 Copyright:
+        SusunDev &copy; 2021 Copyright:
         Scrutinyx
     </div>
 </footer>

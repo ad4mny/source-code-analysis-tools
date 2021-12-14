@@ -1,6 +1,6 @@
-<div class="container position-absolute top-50 start-50 translate-middle">
-    <div class="row">
-        <div class="col-6 offset-3">
+<div class="container ">
+    <div class="row d-flex align-items-center justify-content-center" style="height: 80vh;">
+        <div class="col-6">
             <h3 class="text-center pb-1"><i class="fas fa-file-code fa-3x"></i></h3>
             <h3 class="text-center pb-2">Upload a source code file to begin analysis.</h3>
             <form method="post" action="<?php echo base_url(); ?>analytic/upload" enctype="multipart/form-data" class="row g-1">

@@ -28,7 +28,7 @@ class LoginController extends CI_Controller
         if ($return !== NULL) {
             $this->session->set_userdata('uid', $return['ud_id']);
             $this->session->set_tempdata('notice', 'Login successful.', 1);
-            redirect(base_url() . 'profile');
+            redirect(base_url() . 'analytic');
         } else {
             $this->session->set_tempdata('error', 'Wrong username or password entered.', 1);
             redirect(base_url() . 'login');

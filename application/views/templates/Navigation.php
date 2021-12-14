@@ -44,12 +44,27 @@
                             </a>
                         <?php } else { ?>
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Profile
+                                Client Area
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a href="<?php echo base_url(); ?>profile" class="dropdown-item" type="button">Profile</a></li>
-                                <li><a href="<?php echo base_url(); ?>history" class="dropdown-item" type="button">History</a></li>
-                                <li><a href="<?php echo base_url(); ?>logout" class="dropdown-item" type="button">Logout</a></li>
+                                <li class="m-auto">
+                                    <a href="<?php echo base_url(); ?>history" class="dropdown-item" type="button">
+                                        <i class="fas fa-history fa-sm fa-fw me-1"></i> History
+                                    </a>
+                                </li>
+                                <li class="m-auto">
+                                    <a href="<?php echo base_url(); ?>profile" class="dropdown-item" type="button">
+                                        <i class="fas fa-user-cog fa-sm fa-fw me-1"></i> Account Setting
+                                    </a>
+                                </li>
+                                <li class="m-auto">
+                                    <a href="#" class="dropdown-item" type="button">
+                                        <i class="fas fa-headset fa-sm fa-fw me-1"></i> Contact Us</a>
+                                </li>
+                                <li class="m-auto">
+                                    <a href="<?php echo base_url(); ?>logout" class="dropdown-item" type="button">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw me-1"></i> Logout</a>
+                                </li>
                             </ul>
                         <?php } ?>
                     </h5>

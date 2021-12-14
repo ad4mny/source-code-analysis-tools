@@ -1,4 +1,4 @@
-<nav class="navbar sticky-top  navbar-expand-lg navbar-light bg-white">
+<nav class="px-5 navbar sticky-top  navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

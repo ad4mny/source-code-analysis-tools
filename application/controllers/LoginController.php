@@ -8,15 +8,11 @@ class LoginController extends CI_Controller
         $this->load->model('LoginModel');
     }
 
-    public function index($page = 'login')
+    public function index()
     {
         $this->load->view('templates/Header');
         $this->load->view('templates/Navigation');
-        if ($page === 'login') {
-            $this->load->view('LoginInterface');
-        } else {
-            $this->load->view('RegisterInterface');
-        }
+        $this->load->view('LoginInterface');
         $this->load->view('templates/Footer');
     }
 

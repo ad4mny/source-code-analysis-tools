@@ -157,4 +157,15 @@ class AnalyticController extends CI_Controller
 
         return $result;
     }
+
+    public function deleteResult($file_id)
+    {
+        if ($this->AnalyticModel->deleteResultModel($file_id) === TRUE) {
+            $this->session->set_tempdata('notice', 'Result has been deleted successfully.', 1);
+            redirect(base_url() . 'history');
+        } else {
+            $this->session->set_tempdata('error', 'Error occurred while deleting the result.', 1);
+            redirect(base_url() . 'history');
+        }
+    }
 }

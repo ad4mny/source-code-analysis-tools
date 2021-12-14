@@ -22,4 +22,10 @@ class AnalyticModel extends CI_Model
 
         return $this->db->get()->row_array();
     }
+
+    public function deleteResultModel($file_id)
+    {
+        $this->db->where('fd_id', $file_id);
+        return $this->db->delete('file_data');
+    }
 }

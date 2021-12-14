@@ -19,7 +19,7 @@
                         <a href="<?php echo base_url() . 'result/' . $row['fd_id'] ?>" class="text-decoration-none text-primary btn-sm float-end">
                             View
                         </a>
-                        <a href="<?php echo base_url() . 'result/' . $row['fd_id'] ?>" class="text-decoration-none text-danger btn-sm float-end">
+                        <a href="<?php echo base_url() . 'result/delete/' . $row['fd_id'] ?>" class="text-decoration-none text-danger btn-sm float-end">
                             Delete
                         </a>
                     </div>

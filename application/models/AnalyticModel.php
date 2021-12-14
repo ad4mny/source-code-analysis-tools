@@ -1,8 +1,8 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class AnalyticModel extends CI_Model
 {
-
     public function uploadFileModel($filename)
     {
         $data = array(

@@ -1,12 +1,12 @@
-<div class="container pb-5 px-5 my-5">
+<div class="container-lg pb-5 px-lg-5 my-5">
     <?php if (isset($scan) && is_array($scan) && $scan != false) { ?>
-        <div class="row mx-5">
+        <div class="row mx-lg-5">
             <div class="col">
                 <h1 class="display-4 border-bottom">Scan Result</h1>
             </div>
         </div>
-        <div class="row mx-5 pb-4" style="height: 50vh;">
-            <div class="col-4 border-end pe-2">
+        <div class="row mx-lg-5 pb-4">
+            <div class="col-12 col-lg-4 border-end pe-2">
                 <small class="text-muted">RESULT</small>
                 <?php if ($scan['errors'] == 0) { ?>
                     <p class="text-success">Your file is good, no possible SQL injection flaws detected.</p>
@@ -19,10 +19,11 @@
                 <p><?php echo $scan['time']; ?> second(s)</p>
                 <small class="text-muted">DATE SCANNED</small>
                 <p><?php echo $scan['date']; ?> UTC</p>
-                <a href="<?php echo base_url(); ?>history" class="btn btn-outline-primary">View scan history</a>
+                <a href="<?php echo base_url(); ?>history" class="btn btn-outline-primary"><i class="fas fa-history fa-fw fa-sm"></i> View scan history</a>
+                <a href="#" class="btn btn-secondary" onclick="window.print();"><i class="fas fa-print fa-fw fa-sm"></i> Print</a>
             </div>
-            <div class="col ms-2">
-                <div id="myChart" class="h-100 w-100"></div>
+            <div class="col-12 col-lg-8 ps-2">
+                <div id="myChart" class="h-100 w-100" style="min-height: 50vh;"></div>
                 <script>
                     ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
                     var myConfig = {
@@ -61,7 +62,7 @@
         </div>
         <?php if ($scan['data'] != false) {
             foreach ($scan['data'] as $data) {  ?>
-                <div class="row mx-5 pb-2">
+                <div class="row mx-lg-5 pb-2">
                     <div class="col">
                         <div class="card rounded-3 border-0 shadow h-100">
                             <div class="card-header bg-warning ">
@@ -92,7 +93,7 @@
                     </div>
                 </div>
             <?php } ?>
-            <div class="row mx-5 pb-2">
+            <div class="row mx-lg-5 pb-2">
                 <div class="col">
                     <h1 class="display-4">End of result.</h1>
                 </div>

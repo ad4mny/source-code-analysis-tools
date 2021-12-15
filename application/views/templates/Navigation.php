@@ -24,7 +24,7 @@
                 </li>
                 <li class="nav-item px-1">
                     <h5>
-                        <a href="<?php echo base_url(); ?>solution" class="nav-link  <?php if ($this->uri->segment(1) == 'price') echo 'active border-bottom border-3 border-primary'; ?>">
+                        <a href="<?php echo base_url(); ?>pricing" class="nav-link  <?php if ($this->uri->segment(1) == 'pricing') echo 'active border-bottom border-3 border-primary'; ?>">
                             Pricing
                         </a>
                     </h5>

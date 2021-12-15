@@ -27,43 +27,61 @@
                     <a href="<?php echo base_url(); ?>history" class="btn btn-sm btn-outline-secondary"><i class="fas fa-upload fa-fw fa-sm"></i> Update Code</a>
                 </div>
             </div>
-            <div class="col-12 col-lg-8 ps-2">
-                <div id="myChart" class="h-100 w-100" style="min-height: 50vh;"></div>
-                <script>
-                    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
-                    var myConfig = {
-                        "type": "line",
-                        title: {
-                            "text": "Last 10 Analyzed Result Comparison"
-                        },
-                        backgroundColor: 'none',
-                        plotarea: {
-                            backgroundColor: 'transparent'
-                        },
-                        "scale-y": {
-                            "line-color": "#f6f7f8",
-                            "guide": {
-                                "line-style": "dashed"
+            <?php if (isset($scan['history']) && is_array($scan['history']) && $scan['history'] != false) {
+                $values = [];
+                foreach ($scan['history'] as $history) {
+                    array_push($values, (int)$history['ad_total_error']);
+                }
+            ?>
+                <div class="col-12 col-lg-8 ps-2">
+                    <div id="myChart" class="h-100 w-100" style="min-height: 50vh;"></div>
+                    <script>
+                        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+                        var myConfig = {
+                            "type": "line",
+                            title: {
+                                "text": "Last 10 Analyzed Result Comparison"
                             },
-                            "label": {
-                                "text": "Warning(s) Detected",
+                            backgroundColor: 'none',
+                            plotarea: {
+                                backgroundColor: 'transparent'
                             },
-                            "minor-ticks": 0,
-                            "thousands-separator": ","
-                        },
-                        "series": [{
-                            "values": [20, 40, 25, 50, 15, 45, 33, 34]
-                        }]
-                    };
+                            "scale-y": {
+                                "line-color": "#f6f7f8",
+                                "guide": {
+                                    "line-style": "dashed"
+                                },
+                                "label": {
+                                    "text": "Warning(s) Detected",
+                                },
+                                "minor-ticks": 0,
+                                "thousands-separator": ","
+                            },
+                            "scale-x": {
+                                "min-value": 1,
+                                "max-value": 10,
+                                "label": {
+                                    "text": "Uploaded Source Code",
+                                },
+                            },
+                            "series": [{
+                                "values": <?php echo json_encode($values); ?>
+                            }]
+                        };
 
-                    zingchart.render({
-                        id: 'myChart',
-                        data: myConfig,
-                        height: "100%",
-                        width: "100%"
-                    });
-                </script>
-            </div>
+                        zingchart.render({
+                            id: 'myChart',
+                            data: myConfig,
+                            height: "100%",
+                            width: "100%"
+                        });
+                    </script>
+                </div>
+            <?php } else { ?>
+                <div class="col-12 col-lg-8 border-end pe-2">
+                    <small class="text-muted">No previous data yet.</small>
+                </div>
+            <?php } ?>
         </div>
         <?php if ($scan['data'] != false) {
             foreach ($scan['data'] as $data) {  ?>
@@ -98,9 +116,9 @@
                     </div>
                 </div>
             <?php } ?>
-            <div class="row mx-lg-5 pb-2">
+            <div class="row mx-lg-5 pb-2 pt-2 border-top mt-3">
                 <div class="col">
-                    <h1 class="display-4">End of result.</h1>
+                    <h1 class="display-6">End of result.</h1>
                 </div>
             </div>
     <?php

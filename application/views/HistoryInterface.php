@@ -22,17 +22,17 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="<?php echo base_url() . 'result/' . $row['fd_id'] ?>" class="dropdown-item">
+                                    <a href="<?php echo base_url() . 'result/' . hashin($row['fd_id']); ?>" class="dropdown-item">
                                         View
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#uploadModal" class="dropdown-item" onclick="update(<?php echo $row['fd_id']; ?>)">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#uploadModal" class="dropdown-item" onclick="update('<?php echo hashin($row['fd_id']); ?>')">
                                         Update
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="<?php echo base_url() . 'result/delete/' . $row['fd_id'] ?>" class="dropdown-item">
+                                    <a href="<?php echo base_url() . 'result/delete/' . hashin($row['fd_id']); ?>" class="dropdown-item">
                                         Delete
                                     </a>
                                 </li>

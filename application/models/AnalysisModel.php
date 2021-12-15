@@ -78,9 +78,9 @@ class AnalysisModel extends CI_Model
         $this->db->from('file_data');
         $this->db->where('fd_id', $file_id);
         $file_name = $this->db->get()->row_array();
-
+        
         if ($file_name !== false || $file_name !== NULL) {
-            unlink('./storage/user-upload/' . $_SESSION['uid'] . '/' . $file_name['fd_name']);
+            unlink('./storage/user-upload/' . hashin($_SESSION['uid']) . '/' . $file_name['fd_name']);
             return true;
         } else {
             return false;

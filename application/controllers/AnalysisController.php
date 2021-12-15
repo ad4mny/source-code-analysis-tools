@@ -20,7 +20,7 @@ class AnalysisController extends CI_Controller
 
     public function uploadFile()
     {
-        $upload_path = './storage/user-upload/' . $_SESSION['uid'];
+        $upload_path = './storage/user-upload/' . hashin($_SESSION['uid']);
 
         if (!is_dir($upload_path)) {
             mkdir($upload_path, 0777, TRUE);
@@ -54,7 +54,7 @@ class AnalysisController extends CI_Controller
                     $this->AnalysisModel->insertAnalysisDataModel($file_id, $data['scan']['time'], $data['scan']['errors'], $data['scan']['date']);
 
                     $this->session->set_tempdata('notice', 'Your source code has been scanned and the result stated as below.', 1);
-                    redirect(base_url() . 'result/' . $file_id);
+                    redirect(base_url() . 'result/' . hashin($file_id));
                 } else {
                     $this->session->set_tempdata('error', 'Failed to upload your source code, internal server error.', 1);
                     redirect(base_url() . 'analysis');
@@ -65,6 +65,7 @@ class AnalysisController extends CI_Controller
 
     public function getResult($file_id)
     {
+        $file_id = hashout($file_id);
         $return = $this->AnalysisModel->getFileModel($file_id);
 
         if ($return !== false) {
@@ -90,7 +91,7 @@ class AnalysisController extends CI_Controller
 
         // start the code analysis
         $timer_start = microtime(true);
-        $code_file = file('./storage/user-upload/' . $_SESSION['uid'] . '/' . $file_name);
+        $code_file = file('./storage/user-upload/' . hashin($_SESSION['uid']) . '/' . $file_name);
         $i = 0;
         $total_error = 0;
         $data = [];
@@ -183,11 +184,11 @@ class AnalysisController extends CI_Controller
 
     public function updateFile()
     {
-        $file_id = $this->input->post('file_id');
+        $file_id = hashout($this->input->post('file_id'));
 
         if ($this->AnalysisModel->deleteUploadedFile($file_id) !== false) {
 
-            $config['upload_path'] =  './storage/user-upload/' . $_SESSION['uid'];
+            $config['upload_path'] =  './storage/user-upload/' . hashin($_SESSION['uid']);
             $config['allowed_types'] = 'php';
             $config['max_size']     = '0';
 
@@ -206,7 +207,7 @@ class AnalysisController extends CI_Controller
                     $this->AnalysisModel->insertAnalysisDataModel($file_id, $data['scan']['time'], $data['scan']['errors'], $data['scan']['date']);
 
                     $this->session->set_tempdata('notice', 'Your source code has been scanned and the result stated as below.', 1);
-                    redirect(base_url() . 'result/' . $file_id);
+                    redirect(base_url() . 'result/' . hashin($file_id));
                 } else {
                     $this->session->set_tempdata('error', 'Failed to upload your source code, internal server error.', 1);
                     redirect(base_url() . 'analysis');
@@ -220,6 +221,7 @@ class AnalysisController extends CI_Controller
 
     public function deleteResult($file_id)
     {
+        $file_id = hashout($file_id);
         if ($this->AnalysisModel->deleteResultModel($file_id) === TRUE) {
             $this->session->set_tempdata('notice', 'Result has been deleted successfully.', 1);
             redirect(base_url() . 'history');

@@ -10,7 +10,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item px-1">
                     <h5>
-                        <a href="<?php echo base_url(); ?>analytic" class="nav-link <?php if ($this->uri->segment(1) == 'analytic') echo 'active border-bottom border-3 border-primary'; ?>">
+                        <a href="<?php echo base_url(); ?>analysis" class="nav-link <?php if ($this->uri->segment(1) == 'analysis') echo 'active border-bottom border-3 border-primary'; ?>">
                             Analytic
                         </a>
                     </h5>

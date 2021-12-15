@@ -10,10 +10,10 @@ $route['login/submit'] = 'LoginController/loginUser';
 $route['logout'] = 'LoginController/logoutUser';
 $route['register/submit'] = 'LoginController/registerUser';
 
-$route['analytic'] = 'AnalyticController';
-$route['analytic/upload'] = 'AnalyticController/uploadFile';
-$route['result/(:num)'] = 'AnalyticController/getResult/$1';
-$route['result/delete/(:num)'] = 'AnalyticController/deleteResult/$1';
+$route['analysis'] = 'AnalysisController';
+$route['analysis/upload'] = 'AnalysisController/uploadFile';
+$route['result/(:num)'] = 'AnalysisController/getResult/$1';
+$route['result/delete/(:num)'] = 'AnalysisController/deleteResult/$1';
 $route['solution'] = 'SolutionController';
 $route['about'] = 'AboutController';
 $route['account'] = 'AccountController';

@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class AnalyticController extends CI_Controller
+class AnalysisController extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('AnalyticModel');
+        $this->load->model('AnalysisModel');
         $this->load->library('upload');
     }
 
@@ -14,7 +14,7 @@ class AnalyticController extends CI_Controller
     {
         $this->load->view('templates/Header');
         $this->load->view('templates/Navigation');
-        $this->load->view('AnalyticInterface');
+        $this->load->view('UploadInterface');
         $this->load->view('templates/Footer');
     }
 
@@ -27,24 +27,35 @@ class AnalyticController extends CI_Controller
         $this->upload->initialize($config);
 
         if (!isset($_SESSION['uid'])) {
+
             $this->session->set_tempdata('error', 'Please login first to begin code analysis.', 1);
-            redirect(base_url() . 'analytic');
+            redirect(base_url() . 'analysis');
         } else {
+
             if (!$this->upload->do_upload('source_code')) {
+
                 $this->session->set_tempdata('error', $this->upload->display_errors('', ''), 1);
-                redirect(base_url() . 'analytic');
+                redirect(base_url() . 'analysis');
             } else {
-                $filename = $this->upload->data('file_name');
-                if ($this->AnalyticModel->uploadFileModel($filename) !== false) {
-                    $data['scan'] = $this->doSQLTest($filename);
+
+                $file_name = $this->upload->data('file_name');
+                $file_id = $this->AnalysisModel->uploadFileModel($file_name);
+
+                if ($file_id !== NULL) {
+                    $data['scan'] = $this->doSQLCodeAnalysis($file_name, $file_id);
+
+                    // add analysis data to database
+                    $this->AnalysisModel->insertAnalysisDataModel($file_id, $data['scan']['time'], $data['scan']['errors'], $data['scan']['date']);
+
                     $this->session->set_tempdata('notice', 'Your source code has been scanned and the result stated as below.', 1);
+
                     $this->load->view('templates/Header');
                     $this->load->view('templates/Navigation');
-                    $this->load->view('AnalyticResultInterface', $data);
+                    $this->load->view('AnalysisInterface', $data);
                     $this->load->view('templates/Footer');
                 } else {
                     $this->session->set_tempdata('error', 'Failed to upload your source code, internal server error.', 1);
-                    redirect(base_url() . 'analytic');
+                    redirect(base_url() . 'analysis');
                 }
             }
         }
@@ -52,35 +63,38 @@ class AnalyticController extends CI_Controller
 
     public function getResult($file_id)
     {
-        $return = $this->AnalyticModel->getFileModel($file_id);
+        $return = $this->AnalysisModel->getFileModel($file_id);
+
         if ($return !== false) {
-            $data['scan'] = $this->doSQLTest($return['fd_name']);
+
+            $data['scan'] = $this->doSQLCodeAnalysis($return['fd_name'], $file_id);
+
             $this->session->set_tempdata('notice', 'Your source code has been scanned and the result stated as below.', 1);
+
             $this->load->view('templates/Header');
             $this->load->view('templates/Navigation');
-            $this->load->view('AnalyticResultInterface', $data);
+            $this->load->view('AnalysisInterface', $data);
             $this->load->view('templates/Footer');
         } else {
             $this->session->set_tempdata('error', 'Failed to get your source code, internal server error.', 1);
-            redirect(base_url() . 'analytic');
+            redirect(base_url() . 'analysis');
         }
     }
 
-    public function doSQLTest($filename)
+    public function doSQLCodeAnalysis($file_name, $file_id)
     {
         // define keyword
         $keywords = ['$sql', '$stmt', '$query', '$result'];
 
         // start the code analysis
         $timer_start = microtime(true);
-        $filepath = './storage/user-upload/' . $filename;
-        $codes = file($filepath);
+        $code_file = file('./storage/user-upload/' . $file_name);
         $i = 0;
-        $errors = 0;
+        $total_error = 0;
         $data = [];
 
         // extract full code as line and current line content
-        foreach ($codes as $lines => $content) {
+        foreach ($code_file as $lines => $content) {
 
             $flag = true;
 
@@ -112,7 +126,7 @@ class AnalyticController extends CI_Controller
                             $data[$i]['desc'] = 'Use PDO to prepare SQL query.';
                             $data[$i]['code'] = $keyword . ' = $con->prepare("SELECT * FROM example WHERE id = ?");<br>' .
                                 $keyword . '->bind_param("s", $exampleid);';
-                            $errors++;
+                            $total_error++;
                             $i++;
                         }
                     } else {
@@ -125,7 +139,7 @@ class AnalyticController extends CI_Controller
                             $data[$i]['content'] = trim($content);
                             $data[$i]['desc'] = 'Use PDO to execute SQL query.';
                             $data[$i]['code'] = $keyword . '->execute();';
-                            $errors++;
+                            $total_error++;
                             $i++;
                         }
                     }
@@ -142,28 +156,29 @@ class AnalyticController extends CI_Controller
                     $data[$i]['content'] = trim($content);
                     $data[$i]['desc'] = 'Use PDO to execute SQL query.';
                     $data[$i]['code'] = $keyword . '->execute();';
-                    $errors++;
+                    $total_error++;
                     $i++;
                 }
             }
         }
 
         $timer_end = microtime(true);
+        $time_taken = number_format((float)($timer_end - $timer_start), 5, '.', '');
 
-        $result = array(
+        $analysis_data = array(
             'data' => $data,
-            'time' => number_format((float)($timer_end - $timer_start), 5, '.', ''),
-            'file' => $filename,
-            'errors' => $errors,
+            'time' => $time_taken,
+            'file' => $file_name,
+            'errors' => $total_error,
             'date' => date(DATE_RFC850)
         );
 
-        return $result;
+        return $analysis_data;
     }
 
     public function deleteResult($file_id)
     {
-        if ($this->AnalyticModel->deleteResultModel($file_id) === TRUE) {
+        if ($this->AnalysisModel->deleteResultModel($file_id) === TRUE) {
             $this->session->set_tempdata('notice', 'Result has been deleted successfully.', 1);
             redirect(base_url() . 'history');
         } else {

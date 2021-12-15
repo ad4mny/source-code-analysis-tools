@@ -3,7 +3,7 @@
         <div class="col-6">
             <h3 class="text-center pb-1"><i class="fas fa-file-code fa-3x"></i></h3>
             <h3 class="text-center pb-2">Upload a source code file to begin analysis.</h3>
-            <form method="post" action="<?php echo base_url(); ?>analytic/upload" enctype="multipart/form-data" class="row g-1">
+            <form method="post" action="<?php echo base_url(); ?>analysis/upload" enctype="multipart/form-data" class="row g-1">
                 <div class="col-10">
                     <input type="file" class="form-control form-control-lg" name="source_code">
                 </div>

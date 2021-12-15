@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class AnalyticModel extends CI_Model
+class AnalysisModel extends CI_Model
 {
     public function uploadFileModel($filename)
     {
@@ -11,7 +11,8 @@ class AnalyticModel extends CI_Model
             'fd_log' => date('h:i:s A d/m/Y'),
         );
 
-        return $this->db->insert('file_data', $data);
+        $this->db->insert('file_data', $data);
+        return $this->db->insert_id();
     }
 
     public function getFileModel($file_id)
@@ -21,6 +22,18 @@ class AnalyticModel extends CI_Model
         $this->db->where('fd_id', $file_id);
 
         return $this->db->get()->row_array();
+    }
+
+    public function insertAnalysisDataModel($file_id, $time_taken, $total_error, $date)
+    {
+        $data = array(
+            'ad_fd_id' => $file_id,
+            'ad_time_taken' => $time_taken,
+            'ad_total_error' => $total_error,
+            'ad_datetime' => $date
+        );
+
+        return $this->db->insert('analysis_data', $data);
     }
 
     public function deleteResultModel($file_id)

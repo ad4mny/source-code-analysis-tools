@@ -15,9 +15,13 @@ $route['analysis/upload'] = 'AnalysisController/uploadFile';
 $route['analysis/update'] = 'AnalysisController/updateFile';
 $route['result/(:any)'] = 'AnalysisController/getResult/$1';
 $route['result/delete/(:any)'] = 'AnalysisController/deleteResult/$1';
-$route['solution'] = 'SolutionController';
-$route['about'] = 'AboutController';
+
 $route['account'] = 'AccountController';
 $route['history'] = 'HistoryController';
+
+$route['about'] = 'StaticController/index/about';
+$route['solution'] = 'StaticController/index/solution';
+$route['pricing'] = 'StaticController/index/pricing';
+
 
 

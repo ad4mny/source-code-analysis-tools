@@ -1,8 +1,11 @@
 <div class="container-lg pb-5 px-lg-5 my-5">
     <?php if (isset($scan) && is_array($scan) && $scan != false) { ?>
-        <div class="row mx-lg-5">
+        <div class="row mx-lg-5 border-bottom mb-1">
             <div class="col">
-                <h1 class="display-4 border-bottom">Scan Result</h1>
+                <h1 class="display-4">Scan Result</h1>
+            </div>
+            <div class="col-2 text-end m-auto">
+                <a href="#" class="btn btn-outline-secondary" onclick="window.print();"><i class="fas fa-print fa-fw fa-sm"></i> Print</a>
             </div>
         </div>
         <div class="row mx-lg-5 pb-4">
@@ -19,8 +22,10 @@
                 <p><?php echo $scan['time']; ?> second(s)</p>
                 <small class="text-muted">DATE SCANNED</small>
                 <p><?php echo $scan['date']; ?></p>
-                <a href="<?php echo base_url(); ?>history" class="btn btn-outline-primary"><i class="fas fa-history fa-fw fa-sm"></i> View scan history</a>
-                <a href="#" class="btn btn-secondary" onclick="window.print();"><i class="fas fa-print fa-fw fa-sm"></i> Print</a>
+                <div class="pb-1">
+                    <a href="<?php echo base_url(); ?>history" class="btn btn-sm btn-primary"><i class="fas fa-history fa-fw fa-sm"></i> View History</a>
+                    <a href="<?php echo base_url(); ?>history" class="btn btn-sm btn-outline-secondary"><i class="fas fa-upload fa-fw fa-sm"></i> Update Code</a>
+                </div>
             </div>
             <div class="col-12 col-lg-8 ps-2">
                 <div id="myChart" class="h-100 w-100" style="min-height: 50vh;"></div>

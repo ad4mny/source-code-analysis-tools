@@ -8,7 +8,7 @@ class AnalysisModel extends CI_Model
         $data = array(
             'fd_ud_id' => $_SESSION['uid'],
             'fd_name' => $filename,
-            'fd_log' => date('h:i:s A d/m/Y'),
+            'fd_log' => date(DATE_RFC850),
         );
 
         $this->db->insert('file_data', $data);
@@ -36,9 +36,34 @@ class AnalysisModel extends CI_Model
         return $this->db->insert('analysis_data', $data);
     }
 
+    public function getFileNameModel($file_id)
+    {
+        $this->db->select('fd_name');
+        $this->db->from('file_data');
+        $this->db->where('fd_id', $file_id);
+        return $this->db->get()->row_array();
+    }
+
+    public function updateFileModel($filename, $file_id)
+    {
+        $data = array(
+            'fd_name' => $filename,
+        );
+        
+        $this->db->where('fd_id', $file_id);
+        return $this->db->update('file_data', $data);
+    }
+
     public function deleteResultModel($file_id)
     {
         $this->db->where('fd_id', $file_id);
-        return $this->db->delete('file_data');
+
+        if ($this->db->delete('file_data') !== false) {
+
+            $this->db->where('ad_fd_id', $file_id);
+            return $this->db->delete('analysis_data');
+        } else {
+            return false;
+        }
     }
 }

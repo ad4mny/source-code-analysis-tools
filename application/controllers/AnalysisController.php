@@ -20,7 +20,13 @@ class AnalysisController extends CI_Controller
 
     public function uploadFile()
     {
-        $config['upload_path'] = './storage/user-upload';
+        $upload_path = './storage/user-upload/' . $_SESSION['uid'];
+
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, TRUE);
+        }
+
+        $config['upload_path'] = $upload_path;
         $config['allowed_types'] = 'php';
         $config['max_size']     = '0';
 
@@ -88,7 +94,7 @@ class AnalysisController extends CI_Controller
 
         // start the code analysis
         $timer_start = microtime(true);
-        $code_file = file('./storage/user-upload/' . $file_name);
+        $code_file = file('./storage/user-upload/' . $_SESSION['uid'] . '/' . $file_name);
         $i = 0;
         $total_error = 0;
         $data = [];
@@ -174,6 +180,46 @@ class AnalysisController extends CI_Controller
         );
 
         return $analysis_data;
+    }
+
+    public function updateFile()
+    {
+        $file_id = $this->input->post('file_id');
+        $existing_file_name = $this->AnalysisModel->getFileNameModel($file_id);
+        $upload_path = './storage/user-upload/' . $_SESSION['uid'];
+
+        if ($existing_file_name !== false || $existing_file_name !== NULL)
+            unlink($upload_path . '/' . $existing_file_name['fd_name']);
+
+        $config['upload_path'] =  $upload_path;
+        $config['allowed_types'] = 'php';
+        $config['max_size']     = '0';
+
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload('source_code')) {
+            $this->session->set_tempdata('error', $this->upload->display_errors('', ''), 1);
+        } else {
+
+            $file_name = $this->upload->data('file_name');
+
+            if ($this->AnalysisModel->updateFileModel($file_name, $file_id) !== false) {
+                $data['scan'] = $this->doSQLCodeAnalysis($file_name, $file_id);
+
+                // add analysis data to database
+                $this->AnalysisModel->insertAnalysisDataModel($file_id, $data['scan']['time'], $data['scan']['errors'], $data['scan']['date']);
+
+                $this->session->set_tempdata('notice', 'Your source code has been scanned and the result stated as below.', 1);
+
+                $this->load->view('templates/Header');
+                $this->load->view('templates/Navigation');
+                $this->load->view('AnalysisInterface', $data);
+                $this->load->view('templates/Footer');
+            } else {
+                $this->session->set_tempdata('error', 'Failed to upload your source code, internal server error.', 1);
+                redirect(base_url() . 'analysis');
+            }
+        }
     }
 
     public function deleteResult($file_id)

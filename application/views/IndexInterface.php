@@ -3,7 +3,7 @@
         <div class="col-4 ps-5 ms-5">
             <h3 class="py-3" style=" letter-spacing: 1px;">A tool that provide great insight on code flaw and posible solution.</h3>
             <h5 class="lead lh-base pb-3 text-muted" style=" letter-spacing: 1px;">Assists and help summarised all details on the code flawed on which lines, causes, fix and explanation.</h5>
-            <a href="<?php base_url(); ?>analytic" class="btn btn-outline-primary pb-2" style=" letter-spacing: 1px;">Get Started</a>
+            <a href="<?php base_url(); ?>analysis" class="btn btn-outline-primary pb-2" style=" letter-spacing: 1px;">Get Started</a>
         </div>
         <div class="col pe-0">
             <img src="<?php base_url(); ?>assets/img/hero.png" class="img-fluid">

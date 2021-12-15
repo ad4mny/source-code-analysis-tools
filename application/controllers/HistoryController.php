@@ -18,7 +18,6 @@ class HistoryController extends CI_Controller
         $this->load->view('templates/Footer');
     }
 
-
     public function getUploadedFile()
     {
         return $this->HistoryModel->getUploadedFileModel();

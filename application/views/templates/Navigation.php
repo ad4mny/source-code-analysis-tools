@@ -11,7 +11,7 @@
                 <li class="nav-item px-1">
                     <h5>
                         <a href="<?php echo base_url(); ?>analysis" class="nav-link <?php if ($this->uri->segment(1) == 'analysis') echo 'active border-bottom border-3 border-primary'; ?>">
-                            Analytic
+                            Analysis
                         </a>
                     </h5>
                 </li>

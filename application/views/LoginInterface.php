@@ -35,7 +35,7 @@
                             <input type="password" class="form-control" name="c_password" placeholder="Confirm password" required>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="form-control btn btn-success " name="submit">Create Account</button>
+                            <button type="submit" class="form-control btn btn-secondary " name="submit">Create Account</button>
                         </div>
                     </form>
                 </div>

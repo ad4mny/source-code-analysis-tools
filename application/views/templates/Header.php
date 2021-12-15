@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="<?php echo base_url() ?>assets/img/favicon.ico" type="image/x-icon" />
     <title>Scrutinyx: SQL Injection Analyser</title>
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/custom-bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/all.min.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <script src="<?php echo base_url(); ?>assets/js/jquery-3.6.0.min.js"></script>
@@ -15,4 +16,4 @@
     <script src="<?php echo base_url(); ?>assets/js/zingchart.min.js"></script>
 </head>
 
-<body class="bg-light">
+<body class="bg-white">

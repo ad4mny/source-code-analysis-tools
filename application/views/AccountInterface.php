@@ -15,15 +15,15 @@
         <div class="col-8 border-start ps-3">
             <?php if (isset($profiles) && is_array($profiles) && $profiles != false) { ?>
                 <div class="pb-2">
-                    <small>Username</small>
+                    <small class="text-muted">USERNAME</small>
                     <p> <?php echo $profiles['ud_username']; ?></p>
                 </div>
                 <div class="pb-2">
-                    <small>Full Name</small>
+                    <small class="text-muted">FULL NAME</small>
                     <p> <?php echo $profiles['ud_fullname']; ?></p>
                 </div>
                 <div class="pb-2">
-                    <small>Institution</small>
+                    <small class="text-muted">INSTITUTION</small>
                     <p> <?php echo $profiles['ud_institution']; ?></p>
                 </div>
                 <div class="pb-2">

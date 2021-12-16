@@ -89,10 +89,10 @@
                     <div class="col">
                         <div class="card rounded-3 border-0 shadow h-100">
                             <div class="card-header bg-warning ">
-                                <h5 class="mb-0">
+                                <p class="mb-0 fw-normal" style=" letter-spacing: 1px;" >
                                     <i class="fas fa-exclamation-triangle fa-fw fa-sm me-1"></i>
-                                    Possible SQL Injection
-                                </h5>
+                                    POSSIBLE SQL INJECTION IN YOUR CODE
+                                </p>
                             </div>
                             <div class="card-body d-inline-flex">
                                 <div class="pe-3 border-end">

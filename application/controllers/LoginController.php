@@ -44,17 +44,17 @@ class LoginController extends CI_Controller
         $c_password = $this->input->post('c_password');
 
         if ($password !== $c_password) {
-            $this->session->set_tempdata('error', 'Password not match, please register again.', 1);
-            redirect(base_url() . 'register');
+            $this->session->set_tempdata('error', 'Password does not match, please register again.', 1);
+            redirect(base_url() . 'login');
         } else if ($this->checkUsernameAvailibility($username) !== null) {
-            $this->session->set_tempdata('error', 'Username has been taken, choose another username.', 1);
-            redirect(base_url() . 'register');
+            $this->session->set_tempdata('error', 'Username has been taken, please choose another username.', 1);
+            redirect(base_url() . 'login');
         } else {
             if ($this->LoginModel->registerUserModel($name, $institute, $username, md5($password)) === true) {
                 $this->loginUser($username, $password);
             } else {
                 $this->session->set_tempdata('error', 'Registration failed, please register again.', 1);
-                redirect(base_url() . 'register');
+                redirect(base_url() . 'login');
             }
         }
     }

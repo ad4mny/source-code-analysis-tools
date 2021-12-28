@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 $route['default_controller'] = 'IndexController';
 $route['404_override'] = '';
@@ -23,5 +23,5 @@ $route['about'] = 'StaticController/index/about';
 $route['solution'] = 'StaticController/index/solution';
 $route['pricing'] = 'StaticController/index/pricing';
 
-
-
+// Cordova API Ajax Request
+$route['api/login'] = 'LoginController/loginUserAjax';

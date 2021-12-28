@@ -85,4 +85,28 @@ class LoginController extends CI_Controller
         echo json_encode($this->LoginModel->loginUserModel($username, $password));
         exit;
     }
+
+    public function registerUserAjax()
+    {
+        $name = $this->input->post('name');
+        $institute = $this->input->post('institute');
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+        $c_password = $this->input->post('c_password');
+
+        if ($password !== $c_password) {
+            echo json_encode('Password does not match, please re-enter password again.');
+            exit;
+        } else if ($this->checkUsernameAvailibility($username) !== null) {
+            echo json_encode('Username has been taken, please choose another username.');
+            exit;
+        } else {
+            if ($this->LoginModel->registerUserModel($name, $institute, $username, md5($password)) === true) {
+                $this->loginUserAjax($username, $password);
+            } else {
+                echo json_encode('Registration failed, please register again.');
+                exit;
+            }
+        }
+    }
 }

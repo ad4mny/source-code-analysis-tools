@@ -22,4 +22,12 @@ class HistoryController extends CI_Controller
     {
         return $this->HistoryModel->getUploadedFileModel();
     }
+
+    // Ajax Request
+    public function getUploadedFileAjax()
+    {
+        $_SESSION['uid'] = $this->input->post('uid');
+        echo json_encode($this->HistoryModel->getUploadedFileModel());
+        exit;
+    }
 }

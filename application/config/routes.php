@@ -26,3 +26,4 @@ $route['pricing'] = 'StaticController/index/pricing';
 // Cordova API Ajax Request
 $route['api/login'] = 'LoginController/loginUserAjax';
 $route['api/register'] = 'LoginController/registerUserAjax';
+$route['api/getFileList'] = 'HistoryController/getUploadedFileAjax';

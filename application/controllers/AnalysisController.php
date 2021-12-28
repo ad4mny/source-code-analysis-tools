@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class AnalysisController extends CI_Controller
@@ -229,5 +230,55 @@ class AnalysisController extends CI_Controller
             $this->session->set_tempdata('error', 'Error occurred while deleting the result.', 1);
             redirect(base_url() . 'history');
         }
+    }
+
+    // Ajax Request 
+    public function uploadFileAjax()
+    {
+        $_SESSION['uid'] = $this->input->post('uid');
+
+        $upload_path = './storage/user-upload/' . hashin($_SESSION['uid']);
+
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0777, TRUE);
+        }
+
+        $config['upload_path'] = $upload_path;
+        $config['allowed_types'] = 'php';
+        $config['max_size']     = '0';
+
+        $this->upload->initialize($config);
+
+        if (!$this->upload->do_upload('source_code')) {
+
+            echo json_encode($this->upload->display_errors('', ''));
+            exit;
+        } else {
+
+            $file_name = $this->upload->data('file_name');
+            $file_id = $this->AnalysisModel->uploadFileModel($file_name);
+
+            if ($file_id !== NULL) {
+                $data['scan'] = $this->doSQLCodeAnalysis($file_name, $file_id);
+
+                // add analysis data to database
+                $this->AnalysisModel->insertAnalysisDataModel($file_id, $data['scan']['time'], $data['scan']['errors'], $data['scan']['date']);
+
+                echo json_encode(array('result.html?id=' . $file_id));
+                exit;
+            } else {
+                echo json_encode('Failed to upload your source code, internal server error.');
+                exit;
+            }
+        }
+    }
+
+    public function getResultAjax()
+    {
+        $_SESSION['uid'] = $this->input->post('uid');
+        $file_id = $this->input->post('file_id');
+        $return = $this->AnalysisModel->getFileModel($file_id);
+        echo json_encode($this->doSQLCodeAnalysis($return['fd_name'] , $file_id));
+        exit;
     }
 }

@@ -27,3 +27,5 @@ $route['pricing'] = 'StaticController/index/pricing';
 $route['api/login'] = 'LoginController/loginUserAjax';
 $route['api/register'] = 'LoginController/registerUserAjax';
 $route['api/getFileList'] = 'HistoryController/getUploadedFileAjax';
+$route['api/uploadFile'] = 'AnalysisController/uploadFileAjax';
+$route['api/getResult'] = 'AnalysisController/getResultAjax';

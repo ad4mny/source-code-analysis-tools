@@ -29,3 +29,5 @@ $route['api/register'] = 'LoginController/registerUserAjax';
 $route['api/getFileList'] = 'HistoryController/getUploadedFileAjax';
 $route['api/uploadFile'] = 'AnalysisController/uploadFileAjax';
 $route['api/getResult'] = 'AnalysisController/getResultAjax';
+$route['api/deleteFile'] = 'AnalysisController/deleteResultAjax';
+$route['api/updateFile'] = 'AnalysisController/updateFileAjax';

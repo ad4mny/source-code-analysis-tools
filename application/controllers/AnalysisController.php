@@ -174,6 +174,7 @@ class AnalysisController extends CI_Controller
         $analysis_data = array(
             'data' => $data,
             'time' => $time_taken,
+            'id' => $file_id,
             'file' => $file_name,
             'errors' => $total_error,
             'date' => date(DATE_RFC850),
@@ -278,7 +279,55 @@ class AnalysisController extends CI_Controller
         $_SESSION['uid'] = $this->input->post('uid');
         $file_id = $this->input->post('file_id');
         $return = $this->AnalysisModel->getFileModel($file_id);
-        echo json_encode($this->doSQLCodeAnalysis($return['fd_name'] , $file_id));
+        echo json_encode($this->doSQLCodeAnalysis($return['fd_name'], $file_id));
         exit;
+    }
+
+    public function deleteResultAjax()
+    {
+        $file_id = $this->input->post('file_id');
+        $_SESSION['uid'] = $this->input->post('uid');
+
+        echo json_encode($this->AnalysisModel->deleteResultModel($file_id) === TRUE);
+        exit;
+    }
+
+    public function updateFileAjax()
+    {
+        $file_id = $this->input->post('file_id');
+        $_SESSION['uid'] = $this->input->post('uid');
+
+        if ($this->AnalysisModel->deleteUploadedFile($file_id) !== false) {
+
+            $config['upload_path'] =  './storage/user-upload/' . hashin($_SESSION['uid']);
+            $config['allowed_types'] = 'php';
+            $config['max_size']     = '0';
+
+            $this->upload->initialize($config);
+
+            if (!$this->upload->do_upload('source_code')) {
+                echo json_encode($this->upload->display_errors('', ''));
+                exit;
+            } else {
+
+                $file_name = $this->upload->data('file_name');
+
+                if ($this->AnalysisModel->updateFileModel($file_name, $file_id) !== false) {
+                    $data['scan'] = $this->doSQLCodeAnalysis($file_name, $file_id);
+
+                    // add analysis data to database
+                    $this->AnalysisModel->insertAnalysisDataModel($file_id, $data['scan']['time'], $data['scan']['errors'], $data['scan']['date']);
+
+                    echo json_encode(array('result.html?id=' . $file_id));
+                    exit;
+                } else {
+                    echo json_encode('Failed to update your source code, internal server error.');
+                    exit;
+                }
+            }
+        } else {
+            echo json_encode('Failed to delete existing file, internal server error.');
+            exit;
+        }
     }
 }

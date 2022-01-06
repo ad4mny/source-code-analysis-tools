@@ -21,23 +21,22 @@ class AnalysisController extends CI_Controller
 
     public function uploadFile()
     {
-        $upload_path = './storage/user-upload/' . hashin($_SESSION['uid']);
-
-        if (!is_dir($upload_path)) {
-            mkdir($upload_path, 0777, TRUE);
-        }
-
-        $config['upload_path'] = $upload_path;
-        $config['allowed_types'] = 'php';
-        $config['max_size']     = '0';
-
-        $this->upload->initialize($config);
-
         if (!isset($_SESSION['uid'])) {
 
             $this->session->set_tempdata('error', 'Please login first to begin code analysis.', 1);
             redirect(base_url() . 'analysis');
         } else {
+
+            $path = './storage/user-upload/' . hashin($_SESSION['uid']);
+
+            if (!is_dir($path)) {
+                mkdir($path, 0777, TRUE);
+            }
+
+            $config['upload_path'] = $path;
+            $config['allowed_types'] = 'php';
+
+            $this->upload->initialize($config);
 
             if (!$this->upload->do_upload('source_code')) {
 

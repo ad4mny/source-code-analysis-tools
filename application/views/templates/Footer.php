@@ -1,5 +1,5 @@
-<footer class="text-center text-lg-start bg-light text-muted">
-    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+<footer class="text-center text-lg-start text-light">
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 ">
         <div class="container text-center text-md-start mt-5">
             <div class="row mt-3">
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
@@ -42,7 +42,7 @@
             </div>
         </div>
     </section>
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    <div class="text-center p-4" >
         SusunDev &copy; 2021 Copyright:
         Scrutinyx
     </div>

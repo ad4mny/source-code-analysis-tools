@@ -13,7 +13,7 @@
                     </button>
                 </div>
             </form>
-            <small class="mt-2 text-muted">Currently, only PHP and Java language are acceptable and make sure your file in the stated language.</small>
+            <small class="mt-2 text-dark">Currently, only PHP and Java language are acceptable and make sure your file in the stated language.</small>
         </div>
     </div>
 </div>

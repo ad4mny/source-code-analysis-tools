@@ -2,6 +2,10 @@
 
 body,
 html {
+    background-image: url('../img/background.svg');
+    background-position: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: 'Rubik', sans-serif;
     margin: 0;
     padding: 0;

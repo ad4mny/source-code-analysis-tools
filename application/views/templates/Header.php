@@ -16,4 +16,4 @@
     <script src="<?php echo base_url(); ?>assets/js/zingchart.min.js"></script>
 </head>
 
-<body class="bg-white">
+<body>
